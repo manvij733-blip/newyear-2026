@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hey Love 💖</title>
+
+<style>
+* { box-sizing: border-box; font-family: Poppins, sans-serif; }
+
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #cfe9ff, #ffd6e8);
+  text-align: center;
+  overflow-x: hidden;
+}
+
+.hidden { display: none; }
+
+.fade { animation: fade 1.3s ease forwards; }
+@keyframes fade { from {opacity:0; transform:scale(.95);} to {opacity:1;} }
+
+.sparkle { font-size: 3rem; animation: pop 1s infinite alternate; }
+@keyframes pop { from {transform:scale(1);} to {transform:scale(1.1);} }
+
+button {
+  padding: 12px 26px;
+  border: none;
+  border-radius: 25px;
+  background: #ff85b3;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 25px;
+}
+
+img {
+  max-width: 80%;
+  border-radius: 18px;
+  margin-top: 20px;
+}
+
+/* Cards */
+.card-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.card {
+  width: 180px;
+  height: 120px;
+  perspective: 1000px;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  transition: transform .8s;
+  transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner { transform: rotateY(180deg); }
+
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  padding: 10px;
+}
+
+.card-front { background:#ffb6d9; font-size:2rem; }
+.card-back {
+  background:white;
+  color:#ff5f9e;
+  transform: rotateY(180deg);
+  font-weight: bold;
+}
+
+/* Letter */
+.letter {
+  max-width: 720px;
+  margin: auto;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  text-align: left;
+}
+
+/* Final screen */
+.final-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #cfe9ff, #ffd6e8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.final-text {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #ff3f8b;
+  max-width: 850px;
+  padding: 20px;
+  z-index: 2;
+}
+
+.float::before,
+.float::after {
+  content: "🤍 💋 🤍 💋 🤍";
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  font-size: 2rem;
+  animation: floatUp 12s linear infinite;
+  opacity: .7;
+}
+
+.float::after { animation-delay: 6s; }
+
+@keyframes floatUp {
+  from { transform: translateY(100vh); }
+  to { transform: translateY(-120vh); }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" src="music.mp3" loop></audio>
+
+<!-- SCREEN 1 -->
+<div id="screen1" class="fade">
+  <div class="sparkle">✨ Hey Love ✨</div>
+  <h1>HAPPY NEW YEAR 💙💗</h1>
+  <button onclick="go(2)">Tap Me</button>
+</div>
+
+<!-- SCREEN 2 -->
+<div id="screen2" class="hidden fade">
+  <img src="kitty.jpg">
+  <h2>This reminded me of us 😽</h2>
+  <button onclick="go(3)">Click</button>
+</div>
+
+<!-- SCREEN 3 -->
+<div id="screen3" class="hidden fade">
+  <h2>Tap the cards 💌</h2>
+  <div class="card-container">
+    <div class="card" onclick="flip(this)">
+      <div class="card-inner">
+        <div class="card-front">💗</div>
+        <div class="card-back">You are the best boyfriend in the world</div>
+      </div>
+    </div>
+    <div class="card" onclick="flip(this)">
+      <div class="card-inner">
+        <div class="card-front">💗</div>
+        <div class="card-back">You are the best boyfriend in the world</div>
+      </div>
+    </div>
+    <div class="card" onclick="flip(this)">
+      <div class="card-inner">
+        <div class="card-front">💗</div>
+        <div class="card-back">You are the best boyfriend in the world</div>
+      </div>
+    </div>
+  </div>
+  <button onclick="go(4)">Next</button>
+</div>
+
+<!-- SCREEN 4 -->
+<div id="screen4" class="hidden fade">
+  <img src="couple.jpg">
+  <h2>A letter for my special 💌</h2>
+  <button onclick="startLetter()">Open Letter</button>
+</div>
+
+<!-- SCREEN 5 -->
+<div id="screen5" class="hidden fade">
+  <div id="letter" class="letter"></div>
+  <button id="finalBtn" class="hidden" onclick="go(6)">One last thing 💖</button>
+</div>
+
+<!-- SCREEN 6 -->
+<div id="screen6" class="hidden fade final-bg">
+  <div class="float"></div>
+  <p class="final-text">
+    FALLING IN LOVE WITH YOU IS THE MOST BEAUTIFUL EXPERIENCE OF MY LIFE 💖<br><br>
+    THIS BAUNI BADMOSH LOVES YOU THE MOSTTTTTTTT 🥺❤️
+  </p>
+</div>
+
+<script>
+const text = [
+"Hey love 💖",
+"Thank you… even after being blamed, even after misunderstandings, we stayed.",
+"We loved, we are loving, and we will love — from one year to a whole lifetime.",
+"Thank you for listening to me, for being my therapist, my everything.",
+"For never judging my bakchodis and kand — especially my father things.",
+"I’m sorry if I was selfish sometimes or made you insecure.",
+"But I never wanted that, I swear.",
+"You loved me unconditionally and made me feel beautiful.",
+"Nahi toh main khud ko aadha insaan, aadha jaadu, thoda mogli samajhti thi.",
+"I’m not letting you go — not in 2026, not ever.",
+"Living with you is a dream I never want to wake up from."
+];
+
+let i = 0;
+
+function go(n) {
+  document.querySelectorAll("body > div").forEach(d => d.classList.add("hidden"));
+  document.getElementById("screen" + n).classList.remove("hidden");
+  document.getElementById("music").play();
+}
+
+function flip(card) {
+  card.classList.toggle("flipped");
+}
+
+function startLetter() {
+  go(5);
+  const box = document.getElementById("letter");
+  const btn = document.getElementById("finalBtn");
+  box.innerHTML = "";
+  btn.classList.add("hidden");
+  i = 0;
+
+  const timer = setInterval(() => {
+    if (i < text.length) {
+      box.innerHTML += text[i] + "<br><br>";
+      i++;
+    } else {
+      clearInterval(timer);
+      btn.classList.remove("hidden");
+    }
+  }, 1500);
+}
+</script>
+
+</body>
+</html>
